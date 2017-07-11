@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'bundler'
 require 'sinatra/activerecord'
 require './config/environments' #database configuration
 require './models/model'        #Model class
