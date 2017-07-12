@@ -1,6 +1,6 @@
 development:
   adapter: postgresql
-  database: development
+  database: mydb
   username: alex #<%= ENV['PG_USER'] %>
-  password: nightngiht1 #<%= ENV['PG_PASS'] %>
+  password: nightnight1 #<%= ENV['PG_PASS'] %>
   host: localhost

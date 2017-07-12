@@ -17,6 +17,8 @@ ActiveRecord::Schema.define(version: 20170711082430) do
 
   create_table "models", id: :serial, force: :cascade do |t|
     t.string "name"
+    t.integer "user_id"
+    t.string "user_token"
   end
 
 end

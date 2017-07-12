@@ -5,3 +5,7 @@ gem "activerecord"
 gem "sinatra-activerecord"
 gem "pg"
 gem 'rake'
+gem 'dotenv'
+gem 'json'
+gem 'omniauth'
+gem 'omniauth-github'
