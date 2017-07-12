@@ -7,7 +7,6 @@ require 'dotenv/load'
 require 'json'
 require 'omniauth'
 require 'omniauth-github'
-require 'haml'
 require 'jwt'
 require 'pry'
 
