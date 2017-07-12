@@ -8,6 +8,8 @@ require 'json'
 require 'omniauth'
 require 'omniauth-github'
 require 'haml'
+require 'jwt'
+require 'pry'
 
 if ENV['CLIENT_ID'] && ENV['CLIENT_SECRET']
   CLIENT_ID = ENV['CLIENT_ID']
@@ -30,10 +32,16 @@ class SinatraApp < Sinatra::Base
 
   end
 
+  def private_session
+    return erb :index unless token = session['user']
+    #@data = JWT.decode token, 'password', true, { :algorithm => 'HS256' }
+    #erb "<pre>#{@data[0]["data"]}</pre>"
+    #return  unless data[0]["data"]
+  end
+
   get '/' do
+    #@user = User.all #show users
     erb :index
-    session["value"] ||= "Hello world!"
-    "The cookie you've created contains the value: #{session["value"]}"
   end
 
   post '/submit' do
@@ -46,13 +54,38 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/models' do
+    binding.pry;
+    private_session
     @models = Model.all
     erb :models
   end
 
+  get '/privateurl' do
+    private_session
+  end
+
   get '/auth/:provider/callback' do
-    erb "<h1>#{params[:provider]}</h1>
-         <pre>#{JSON.pretty_generate(request.env['omniauth.auth'])}</pre>"
+    #@user = User.new(params[:user])
+    #if @user.save
+    #  redirect '/users'
+    #else
+    #  "Sorry, there was an error!"
+    #end
+    private_session
+    @user_name = request.env['omniauth.auth'][:info][:name]
+    @user_id = request.env['omniauth.auth'][:uid]
+
+    payload = { data: @user_id }
+    #rsa_private = OpenSSL::PKey::RSA.generate 2048
+    #rsa_public = rsa_private.public_key
+    encr_user_id = JWT.encode payload, 'password', 'HS256'
+
+    session["user"] = encr_user_id
+
+    #decoded_token = JWT.decode token, rsa_public, true, { :algorithm => 'RS256' }
+    #<pre>#{JSON.pretty_generate(request.env['omniauth.auth'][:uid])}</pre>
+
+    erb "<h1>Hello, #{@user_name}</h1>"
   end
 
   get '/auth/failure' do
