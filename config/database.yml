@@ -11,4 +11,3 @@ production:
   database: mydb
   username: alex #<%= ENV['PG_USER'] %>
   password: nightnight1 #<%= ENV['PG_PASS'] %>
-  host: localhost
