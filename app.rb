@@ -11,6 +11,7 @@ require 'omniauth-github'
 require 'jwt'
 require 'pry'
 require 'bootstrap'
+require 'yt'
 
 if ENV['CLIENT_ID'] && ENV['CLIENT_SECRET']
   CLIENT_ID = ENV['CLIENT_ID']
@@ -79,6 +80,7 @@ class SinatraApp < Sinatra::Base
     #else
     #  "Sorry, there was an error!"
     #end
+
     private_session
     @user_name = request.env['omniauth.auth'][:info][:name]
     @user_id = request.env['omniauth.auth'][:uid]
@@ -90,10 +92,20 @@ class SinatraApp < Sinatra::Base
 
     session["user"] = encr_user_id
 
+    #Yt.configuration.api_key = ENV['YT_ID'] ## replace with your API key
+    #Yt.configure do |config|
+    #  config.api_key = 'AIzaSyCbTLuWCITYU_k69ozhkOLaSkDqfi_50ps'
+    #end
+
+    #video = Yt::Video.new id: 'Ow_qI_F2ZJI'
+    #video.title
+
     #decoded_token = JWT.decode token, rsa_public, true, { :algorithm => 'RS256' }
     #<pre>#{JSON.pretty_generate(request.env['omniauth.auth'][:uid])}</pre>
 
-    erb "<h1>Hello, #{@user_name}. Your encrypted id is #{encr_user_id}</h1>"
+    erb '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_qI_F2ZJI" frameborder="0" allowfullscreen></iframe>
+    '
+
   end
 
   get '/auth/failure' do
