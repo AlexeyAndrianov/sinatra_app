@@ -10,6 +10,7 @@ require 'omniauth'
 require 'omniauth-github'
 require 'jwt'
 require 'pry'
+require 'bootstrap'
 
 if ENV['CLIENT_ID'] && ENV['CLIENT_SECRET']
   CLIENT_ID = ENV['CLIENT_ID']

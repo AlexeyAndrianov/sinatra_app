@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- Styles -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+<style>
+    body {
+    padding-top: 60px; /* When using the navbar-top-fixed */
+    }
+    .center {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+    }
+    .centercontents {
+    text-align: center !important;
+    }
+    .alignrightcontents {
+    text-align: right !important;
+    }
+    body
+    {
+    background-image:url('/img/escheresque_ste.png');
+    }
+</style>
+
+</head>
+<body>
+  <div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/home">Playlister  <img src="/img/youtube_icon_small.gif"></a>
+      <div class="nav-collapse">
+        <ul class="nav">
+<!--           <li class="active"><a href="#"><i class="icon-home icon-white"></i> Home</a></li> -->
+          <li><a href="/artists">Artists</a></li>
+          <li><a href="/songs">Songs</a></li>
+<!--           <li><a href="/genres">Genres</a></li> -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Genres <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Library <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/artists/add">Add Artist</a></li>
+              <li><a href="/artists/drop">Drop Artist</a></li>
+              <li><a href="/songs/add">Add Song</a></li>
+              <li><a href="/songs/drop">Drop Song</a></li>
+              <li><a href="/genres">Add Genre</a></li>
+            </ul>
+          </li>
+          <li><a href="/random">Shuffle</a></li>
+        </ul>
+        <form class="navbar-search" action="/search" method="GET">
+          <input type="text" class="search-query span4" placeholder="Search" name="search">
+        </form>
+      </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+  </div><!-- /.navbar-inner -->
+</div><!-- /.navbar -->
+<%= yield %>
+
+</body>
+</html>
