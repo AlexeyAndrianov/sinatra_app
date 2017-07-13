@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170712093216) do
 
   create_table "users", force: :cascade do |t|
     t.string "token"
+    t.string "name"
   end
 
 end

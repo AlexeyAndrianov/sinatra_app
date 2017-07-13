@@ -2,7 +2,8 @@ require 'sinatra'
 require 'bundler'
 require 'rake'
 require 'sinatra/activerecord'
-require './models/model'        #Model class
+require './models/model'
+require './models/user'        #Model class
 require 'dotenv/load'
 require 'json'
 require 'omniauth'
@@ -33,7 +34,7 @@ class SinatraApp < Sinatra::Base
 
   def private_session
     return erb :index unless token = session['user']
-    #@data = JWT.decode token, 'password', true, { :algorithm => 'HS256' }
+    @data = JWT.decode token, 'password', true, { :algorithm => 'HS256' }
     #erb "<pre>#{@data[0]["data"]}</pre>"
     #return  unless data[0]["data"]
   end
@@ -53,10 +54,17 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/models' do
-    binding.pry;
+    #binding.pry;
     private_session
     @models = Model.all
     erb :models
+  end
+
+  get '/users' do
+    #binding.pry;
+    private_session
+    @users = User.all
+    erb :users
   end
 
   get '/privateurl' do
@@ -84,7 +92,7 @@ class SinatraApp < Sinatra::Base
     #decoded_token = JWT.decode token, rsa_public, true, { :algorithm => 'RS256' }
     #<pre>#{JSON.pretty_generate(request.env['omniauth.auth'][:uid])}</pre>
 
-    erb "<h1>Hello, #{@user_name}</h1>"
+    erb "<h1>Hello, #{@user_name}. Your encrypted id is #{encr_user_id}</h1>"
   end
 
   get '/auth/failure' do
