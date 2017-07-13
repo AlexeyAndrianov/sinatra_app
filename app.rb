@@ -34,7 +34,7 @@ class SinatraApp < Sinatra::Base
 
   def private_session
     return erb :index unless token = session['user']
-    @data = JWT.decode token, 'password', true, { :algorithm => 'HS256' }
+    #@data = JWT.decode token, 'password', true, { :algorithm => 'HS256' }
     #erb "<pre>#{@data[0]["data"]}</pre>"
     #return  unless data[0]["data"]
   end
