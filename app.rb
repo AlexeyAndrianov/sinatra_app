@@ -13,6 +13,7 @@ require 'pry'
 require 'bootstrap'
 require 'yt'
 
+
 if ENV['CLIENT_ID'] && ENV['CLIENT_SECRET']
   CLIENT_ID = ENV['CLIENT_ID']
   CLIENT_SECRET = ENV['CLIENT_SECRET']
@@ -30,19 +31,13 @@ class SinatraApp < Sinatra::Base
 
   use OmniAuth::Builder do
     provider :github, CLIENT_ID,CLIENT_SECRET
-    #provider :att, 'client_id', 'client_secret', :callback_url => (ENV['BASE_DOMAIN']
-
   end
 
   def private_session
     return erb :index unless token = session['user']
-    #@data = JWT.decode token, 'password', true, { :algorithm => 'HS256' }
-    #erb "<pre>#{@data[0]["data"]}</pre>"
-    #return  unless data[0]["data"]
   end
 
   get '/' do
-    #@user = User.all #show users
     erb :index
   end
 
@@ -56,14 +51,12 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/models' do
-    #binding.pry;
     private_session
     @models = Model.all
     erb :models
   end
 
   get '/users' do
-    #binding.pry;
     private_session
     @users = User.all
     erb :users
@@ -74,38 +67,13 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/auth/:provider/callback' do
-    #@user = User.new(params[:user])
-    #if @user.save
-    #  redirect '/users'
-    #else
-    #  "Sorry, there was an error!"
-    #end
-
     private_session
     @user_name = request.env['omniauth.auth'][:info][:name]
     @user_id = request.env['omniauth.auth'][:uid]
-
     payload = { data: @user_id }
-    #rsa_private = OpenSSL::PKey::RSA.generate 2048
-    #rsa_public = rsa_private.public_key
     encr_user_id = JWT.encode payload, 'password', 'HS256'
-
     session["user"] = encr_user_id
-
-    #Yt.configuration.api_key = ENV['YT_ID'] ## replace with your API key
-    #Yt.configure do |config|
-    #  config.api_key = 'AIzaSyCbTLuWCITYU_k69ozhkOLaSkDqfi_50ps'
-    #end
-
-    #video = Yt::Video.new id: 'Ow_qI_F2ZJI'
-    #video.title
-
-    #decoded_token = JWT.decode token, rsa_public, true, { :algorithm => 'RS256' }
-    #<pre>#{JSON.pretty_generate(request.env['omniauth.auth'][:uid])}</pre>
-
-    erb '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_qI_F2ZJI" frameborder="0" allowfullscreen></iframe>
-    '
-
+    erb '<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_qI_F2ZJI" frameborder="0" allowfullscreen></iframe>'
   end
 
   get '/auth/failure' do
@@ -126,7 +94,6 @@ class SinatraApp < Sinatra::Base
     session[:authenticated] = false
     redirect '/'
   end
-
 end
 
 SinatraApp.run! if __FILE__ == $0
